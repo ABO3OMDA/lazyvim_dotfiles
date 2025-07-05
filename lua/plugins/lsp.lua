@@ -1,15 +1,15 @@
 -- lua/plugins/lsp.lua
--- Updated consolidated LSP configuration with fixes
+-- Consolidated LSP configuration with all fixes
 return {
   {
     "neovim/nvim-lspconfig",
     opts = {
-      -- Disable inlay hints globally to prevent the column out of range errors
+      -- Disable inlay hints globally to prevent errors
       inlay_hints = {
         enabled = false,
       },
       servers = {
-        -- Use vtsls instead of tsserver (more stable and maintained)
+        -- TypeScript/JavaScript (using vtsls - more stable)
         vtsls = {
           settings = {
             complete_function_calls = true,
@@ -27,11 +27,27 @@ return {
               suggest = {
                 completeFunctionCalls = true,
               },
+              inlayHints = {
+                enumMemberValues = { enabled = false },
+                functionLikeReturnTypes = { enabled = false },
+                parameterNames = { enabled = false },
+                parameterTypes = { enabled = false },
+                propertyDeclarationTypes = { enabled = false },
+                variableTypes = { enabled = false },
+              },
             },
             javascript = {
               updateImportsOnFileMove = { enabled = "always" },
               suggest = {
                 completeFunctionCalls = true,
+              },
+              inlayHints = {
+                enumMemberValues = { enabled = false },
+                functionLikeReturnTypes = { enabled = false },
+                parameterNames = { enabled = false },
+                parameterTypes = { enabled = false },
+                propertyDeclarationTypes = { enabled = false },
+                variableTypes = { enabled = false },
               },
             },
           },
@@ -88,7 +104,6 @@ return {
           end
         end,
         vtsls = function(_, opts)
-          -- Disable inlay hints on attach to prevent errors
           opts.on_attach = function(client, bufnr)
             if client.server_capabilities.inlayHintProvider then
               vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })

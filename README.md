@@ -193,12 +193,10 @@ A comprehensive Neovim configuration built on top of [LazyVim](https://github.co
 │   │   ├── lazy.lua          # Lazy.nvim setup
 │   │   └── options.lua       # Neovim options
 │   └── plugins/
-│       ├── data.lua          # YAML, Prisma support
-│       ├── docker.lua        # Docker integration
+│       ├── lsp.lua          # LSP configuration (consolidated)
 │       ├── editor.lua        # Editor enhancements
 │       ├── formatting.lua    # Code formatting
 │       ├── fzf.lua          # Fuzzy finder config
-│       ├── oil.lua          # File explorer
 │       ├── php.lua          # PHP/Laravel tools
 │       ├── snippets.lua     # Code snippets
 │       ├── treesitter.lua   # Syntax highlighting
