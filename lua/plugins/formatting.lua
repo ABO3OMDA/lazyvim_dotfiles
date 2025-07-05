@@ -1,8 +1,8 @@
+-- lua/plugins/formatting.lua
 return {
   -- Formatter configuration
   {
     "stevearc/conform.nvim",
-    dependencies = { "mason.nvim" },
     opts = {
       formatters_by_ft = {
         blade = { "blade-formatter" },
@@ -20,14 +20,13 @@ return {
         scss = { "prettier" },
         markdown = { "prettier" },
       },
-      -- LazyVim uses default_format_opts instead of format_on_save
       default_format_opts = {
         timeout_ms = 500,
-        lsp_format = "fallback", -- LazyVim uses lsp_format instead of lsp_fallback
+        lsp_format = "fallback",
       },
     },
-    -- Remove the config function - LazyVim handles this automatically
   },
+
   -- Install formatters
   {
     "williamboman/mason.nvim",
@@ -44,6 +43,8 @@ return {
         "docker-compose-language-service",
         "yaml-language-server",
         "eslint-lsp",
+        "phpactor",
+        "intelephense",
       })
     end,
   },

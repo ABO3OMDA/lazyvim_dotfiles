@@ -1,50 +1,13 @@
+-- lua/plugins/php.lua
 return {
-  -- PHP LSP and tools
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        phpactor = {
-          keys = {
-            { "<leader>ca", "<cmd>PhpActor context_menu<cr>", desc = "PHP Actor Menu" },
-            { "<leader>cr", "<cmd>PhpActor transform<cr>", desc = "PHP Transform" },
-          },
-          filetypes = { "php", "blade" },
-          init_options = {
-            ["language_server_phpstan.enabled"] = true,
-            ["language_server_psalm.enabled"] = false,
-          },
-        },
-        intelephense = {
-          filetypes = { "php", "blade" },
-          settings = {
-            intelephense = {
-              files = {
-                maxSize = 5000000,
-              },
-            },
-          },
-        },
-      },
-      setup = {
-        phpactor = function(_, opts)
-          opts.capabilities.textDocument.completion.completionItem.snippetSupport = true
-        end,
-      },
-    },
-  },
-
   -- PHP Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
+      opts.ensure_installed = opts.ensure_installed or {}
       vim.list_extend(opts.ensure_installed, {
         "php",
         "phpdoc",
-        "html",
-        "css",
-        "javascript",
-        "vue",
         "blade",
       })
     end,
@@ -54,9 +17,6 @@ return {
   {
     "mfussenegger/nvim-dap",
     optional = true,
-    dependencies = {
-      "mfussenegger/nvim-dap-python",
-    },
     opts = function()
       local dap = require("dap")
       dap.adapters.php = {
@@ -104,13 +64,15 @@ return {
       "tpope/vim-dotenv",
       "MunifTanjim/nui.nvim",
       "nvim-lua/plenary.nvim",
-      "kevinhwang91/promise-async", -- Add this missing dependency
+      "kevinhwang91/promise-async",
     },
     cmd = { "Sail", "Artisan", "Composer", "Npm", "Yarn", "Laravel" },
     keys = {
       { "<leader>la", ":Laravel artisan<cr>", desc = "Laravel Artisan" },
       { "<leader>lr", ":Laravel routes<cr>", desc = "Laravel Routes" },
       { "<leader>lm", ":Laravel related<cr>", desc = "Laravel Related" },
+      { "<leader>ca", "<cmd>PhpActor context_menu<cr>", desc = "PHP Actor Menu" },
+      { "<leader>cr", "<cmd>PhpActor transform<cr>", desc = "PHP Transform" },
     },
     event = { "VeryLazy" },
     config = function()
@@ -151,7 +113,7 @@ return {
     ft = "php",
     keys = {
       { "<leader>u", "<cmd>call phpnamespace#complete('')<cr>", desc = "PHP Use Class" },
-      { "<leader>e", "<cmd>call phpnamespace#expand_class()<cr>", desc = "PHP Expand Class" },
+      { "<leader>pe", "<cmd>call phpnamespace#expand_class()<cr>", desc = "PHP Expand Class" },
     },
   },
 }

@@ -1,5 +1,6 @@
+-- lua/plugins/editor.lua
 return {
-  -- Disable snacks.nvim explorer
+  -- Disable snacks.nvim explorer since we're using Oil
   {
     "folke/snacks.nvim",
     opts = {
@@ -8,7 +9,7 @@ return {
     },
   },
 
-  -- Oil.nvim - Better file explorer
+  -- Oil.nvim - Better file explorer (consolidated configuration)
   {
     "stevearc/oil.nvim",
     lazy = false,
@@ -30,6 +31,11 @@ return {
         },
         win_options = {
           wrap = false,
+        },
+        -- Better icons
+        icons = {
+          directory = "",
+          file = "",
         },
       })
     end,
