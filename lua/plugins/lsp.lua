@@ -1,33 +1,37 @@
 -- lua/plugins/lsp.lua
--- Consolidated LSP configuration to avoid duplicates
+-- Updated consolidated LSP configuration with fixes
 return {
   {
     "neovim/nvim-lspconfig",
     opts = {
+      -- Disable inlay hints globally to prevent the column out of range errors
+      inlay_hints = {
+        enabled = false,
+      },
       servers = {
-        -- TypeScript/JavaScript
-        tsserver = {
+        -- Use vtsls instead of tsserver (more stable and maintained)
+        vtsls = {
           settings = {
+            complete_function_calls = true,
+            vtsls = {
+              enableMoveToFileCodeAction = true,
+              autoUseWorkspaceTsdk = true,
+              experimental = {
+                completion = {
+                  enableServerSideFuzzyMatch = true,
+                },
+              },
+            },
             typescript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
+              updateImportsOnFileMove = { enabled = "always" },
+              suggest = {
+                completeFunctionCalls = true,
               },
             },
             javascript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
+              updateImportsOnFileMove = { enabled = "always" },
+              suggest = {
+                completeFunctionCalls = true,
               },
             },
           },
@@ -81,6 +85,14 @@ return {
         phpactor = function(_, opts)
           if opts.capabilities then
             opts.capabilities.textDocument.completion.completionItem.snippetSupport = true
+          end
+        end,
+        vtsls = function(_, opts)
+          -- Disable inlay hints on attach to prevent errors
+          opts.on_attach = function(client, bufnr)
+            if client.server_capabilities.inlayHintProvider then
+              vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
+            end
           end
         end,
       },

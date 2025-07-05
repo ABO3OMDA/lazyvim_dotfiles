@@ -1,21 +1,45 @@
 -- lua/plugins/typescript.lua
+-- Updated TypeScript configuration that works with vtsls
 return {
-  -- TypeScript tools
+  -- Modern TypeScript tools (replaces the old typescript.nvim)
   {
-    "jose-elias-alvarez/typescript.nvim",
-    lazy = true,
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-    opts = {},
-    config = function(_, opts)
-      require("typescript").setup({ server = opts })
+    config = function()
+      require("typescript-tools").setup({
+        on_attach = function(client, bufnr)
+          -- Disable inlay hints to prevent errors
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
+          end
+        end,
+        settings = {
+          tsserver_file_preferences = {
+            includeInlayParameterNameHints = "none",
+            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+            includeInlayFunctionParameterTypeHints = false,
+            includeInlayVariableTypeHints = false,
+            includeInlayPropertyDeclarationTypeHints = false,
+            includeInlayFunctionLikeReturnTypeHints = false,
+            includeInlayEnumMemberValueHints = false,
+          },
+        },
+      })
     end,
     keys = {
-      { "<leader>to", "<cmd>TypescriptOrganizeImports<cr>", desc = "Organize Imports" },
-      { "<leader>tR", "<cmd>TypescriptRenameFile<cr>", desc = "Rename File" },
-      { "<leader>ta", "<cmd>TypescriptAddMissingImports<cr>", desc = "Add Missing Imports" },
-      { "<leader>tu", "<cmd>TypescriptRemoveUnused<cr>", desc = "Remove Unused" },
-      { "<leader>tf", "<cmd>TypescriptFixAll<cr>", desc = "Fix All" },
+      { "<leader>to", "<cmd>TSToolsOrganizeImports<cr>", desc = "Organize Imports" },
+      { "<leader>tR", "<cmd>TSToolsRenameFile<cr>", desc = "Rename File" },
+      { "<leader>ta", "<cmd>TSToolsAddMissingImports<cr>", desc = "Add Missing Imports" },
+      { "<leader>tu", "<cmd>TSToolsRemoveUnusedImports<cr>", desc = "Remove Unused" },
+      { "<leader>tf", "<cmd>TSToolsFixAll<cr>", desc = "Fix All" },
     },
+  },
+
+  -- Disable the old typescript.nvim to prevent conflicts
+  {
+    "jose-elias-alvarez/typescript.nvim",
+    enabled = false,
   },
 
   -- Better TypeScript errors

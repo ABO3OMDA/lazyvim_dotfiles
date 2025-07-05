@@ -1,4 +1,5 @@
 -- lua/plugins/formatting.lua
+-- Updated formatting configuration with vtsls
 return {
   -- Formatter configuration
   {
@@ -27,7 +28,7 @@ return {
     },
   },
 
-  -- Install formatters
+  -- Install formatters and language servers
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
@@ -38,7 +39,7 @@ return {
         "php-cs-fixer",
         "pint",
         "prisma-language-server",
-        "typescript-language-server",
+        "vtsls", -- Use vtsls instead of typescript-language-server
         "dockerfile-language-server",
         "docker-compose-language-service",
         "yaml-language-server",
