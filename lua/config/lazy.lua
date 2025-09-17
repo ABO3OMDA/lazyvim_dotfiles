@@ -16,28 +16,37 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
-    { import = "lazyvim.plugins.extras.lang.markdown" },
-    { import = "lazyvim.plugins.extras.ui.mini-animate" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },
     { import = "lazyvim.plugins.extras.linting.eslint" },
-    { import = "lazyvim.plugins.extras.dap.core" },
-    { import = "lazyvim.plugins.extras.test.core" },
-    -- { import = "lazyvim.plugins.extras.coding.copilot" }, -- Uncomment if you have GitHub Copilot
     { import = "plugins" },
   },
   defaults = {
-    lazy = false,
+    lazy = true, -- Enable lazy loading by default
     version = false,
   },
-  checker = { enabled = true },
+  checker = { enabled = false }, -- Disable auto-update checks for faster startup
   performance = {
+    cache = { enabled = true },
+    reset_packpath = true,
     rtp = {
+      reset = true,
       disabled_plugins = {
         "gzip",
+        "netrwPlugin", -- We use Oil instead
         "tarPlugin",
         "tohtml",
         "tutor",
         "zipPlugin",
+        "matchit",
+        "matchparen",
+        "2html_plugin",
+        "getscript",
+        "getscriptPlugin",
+        "logipat",
+        "rrhelper",
+        "spellfile_plugin",
+        "vimball",
+        "vimballPlugin",
       },
     },
   },

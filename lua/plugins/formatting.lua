@@ -28,7 +28,7 @@ return {
     },
   },
 
-  -- Install formatters and language servers
+  -- Install only necessary formatters and language servers
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
@@ -37,15 +37,12 @@ return {
         "blade-formatter",
         "prettier",
         "php-cs-fixer",
-        "pint",
-        "prisma-language-server",
-        "vtsls", -- Use vtsls instead of typescript-language-server
+        "vtsls",
         "dockerfile-language-server",
         "docker-compose-language-service",
         "yaml-language-server",
         "eslint-lsp",
-        "phpactor",
-        "intelephense",
+        "intelephense", -- Only one PHP server
       })
     end,
   },

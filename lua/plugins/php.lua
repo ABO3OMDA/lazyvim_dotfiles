@@ -56,25 +56,21 @@ return {
     },
   },
 
-  -- Laravel specific
+  -- Laravel specific (optimized)
   {
     "adalessa/laravel.nvim",
     dependencies = {
       "nvim-telescope/telescope.nvim",
-      "tpope/vim-dotenv",
       "MunifTanjim/nui.nvim",
       "nvim-lua/plenary.nvim",
-      "kevinhwang91/promise-async",
     },
-    cmd = { "Sail", "Artisan", "Composer", "Npm", "Yarn", "Laravel" },
+    cmd = { "Sail", "Artisan", "Composer", "Laravel" },
     keys = {
       { "<leader>la", ":Laravel artisan<cr>", desc = "Laravel Artisan" },
       { "<leader>lr", ":Laravel routes<cr>", desc = "Laravel Routes" },
       { "<leader>lm", ":Laravel related<cr>", desc = "Laravel Related" },
-      { "<leader>ca", "<cmd>PhpActor context_menu<cr>", desc = "PHP Actor Menu" },
-      { "<leader>cr", "<cmd>PhpActor transform<cr>", desc = "PHP Transform" },
     },
-    event = { "VeryLazy" },
+    ft = "php",
     config = function()
       require("laravel").setup()
     end,

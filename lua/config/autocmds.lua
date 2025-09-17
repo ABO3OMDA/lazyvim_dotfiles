@@ -1,7 +1,7 @@
 -- lua/config/autocmds.lua
--- Add this to your existing autocmds.lua file
+-- Optimized autocmds
 
--- Disable inlay hints globally to prevent column out of range errors
+-- Disable inlay hints globally
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("DisableInlayHints", { clear = true }),
   callback = function(event)
@@ -12,11 +12,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- Additional autocmd to handle the specific error
+-- Performance optimizations
 vim.api.nvim_create_autocmd("User", {
   pattern = "LazyVimStarted",
   callback = function()
-    -- Disable inlay hints globally
     vim.lsp.inlay_hint.enable(false)
+    -- Reduce updatetime for better performance
+    vim.opt.updatetime = 250
   end,
 })
